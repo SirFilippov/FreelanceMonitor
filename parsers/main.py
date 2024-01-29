@@ -17,7 +17,7 @@ class ParseManager:
 
     async def run(self):
         async with async_playwright() as playwright:
-            browser = await playwright.chromium.launch(headless=False)
+            browser = await playwright.chromium.launch(headless=True)
             context = await browser.new_context(
                 ignore_https_errors=True,
                 user_agent=self.user_agent)
