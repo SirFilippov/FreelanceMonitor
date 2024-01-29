@@ -21,6 +21,7 @@ pars_is_on = False
 
 def format_jobs(jobs: list) -> str:
     formatted_jobs = []
+    print(jobs)
     for counter, (job_url, job_name) in enumerate(jobs, start=1):
         formatted_jobs.append(f'{counter}. <a href="{job_url}">{job_name}</a>')
     formatted_vacancies = '\n'.join(formatted_jobs)
@@ -70,7 +71,7 @@ async def send_msg():
 @router.message(F.text == "Show Current")
 async def parser_manager(message: Message) -> None:
     db_connect = DBManager()
-    current_jobs = format_jobs(db_connect.read_current_jobs())
+    current_jobs = format_jobs(db_connect.tg_current_jobs())
     await message.answer(current_jobs,
                          reply_markup=kb,
                          disable_web_page_preview=True)

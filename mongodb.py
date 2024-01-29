@@ -40,6 +40,13 @@ class DBManager:
 
         return current_jobs
 
+    def tg_current_jobs(self):
+
+        current_jobs = list(self.db.current_jobs.find({}, {"_id": 0, "url": 1, "name": 1}).sort("add_date", -1))
+        current_jobs = ((job['url'], job['name']) for job in current_jobs)
+
+        return current_jobs
+
 
 if __name__ == '__main__':
     a = DBManager()
