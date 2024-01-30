@@ -21,7 +21,6 @@ pars_is_on = False
 
 def format_jobs(jobs: list) -> str:
     formatted_jobs = []
-    print(jobs)
     for counter, (job_url, job_name) in enumerate(jobs, start=1):
         formatted_jobs.append(f'{counter}. <a href="{job_url}">{job_name}</a>')
     formatted_vacancies = '\n'.join(formatted_jobs)

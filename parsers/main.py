@@ -26,6 +26,8 @@ class ParseManager:
             jobs = [parser(browser_page).main() for browser_page, parser in zip(pages, self.parsers)]
             jobs = await asyncio.gather(*jobs)
             jobs = list(chain.from_iterable(jobs))
+            print(f'Спарсили в общем заявок: {len(jobs)}')
+
             return jobs
 
 

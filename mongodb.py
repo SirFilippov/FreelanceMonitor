@@ -14,6 +14,7 @@ class DBManager:
     def handle_input_jobs(self, requested_jobs: list) -> list:
         """Записывает и возвращает только новые заявки в базу данных"""
 
+        print(f'mongodb принял заявок: {len(requested_jobs)}')
         current_jobs_urls = [job['url'] for job in self.read_current_jobs()]
         requested_jobs_urls = {job['url'] for job in requested_jobs}
         new_jobs = []
@@ -27,6 +28,7 @@ class DBManager:
         # Заносим новые заявки
         for job in requested_jobs:
             if job['url'] not in current_jobs_urls:
+                print(f"Новая заявка: {job['url']}")
                 job['add_date'] = datetime.now()
                 new_jobs.append((job['url'], job['name']))
                 self.db.current_jobs.insert_one(job)

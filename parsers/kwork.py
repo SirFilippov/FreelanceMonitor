@@ -10,11 +10,13 @@ class Kwork:
         self.page = page
 
     async def main(self):
+        print('Начинаю парсить kwork')
         jobs = []
         pages_htmls = await self.export_pages_htmls()
         for page_html in pages_htmls:
             for job in self.parse_page(page_html):
                 jobs.append(job)
+        print(f'Распарсил kwork: {len(jobs)}')
 
         return jobs
 

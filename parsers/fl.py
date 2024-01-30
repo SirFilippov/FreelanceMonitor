@@ -1,5 +1,6 @@
 import asyncio
 
+from playwright._impl._errors import TimeoutError
 from bs4 import BeautifulSoup as BSoup
 from playwright.async_api import async_playwright
 from fake_useragent import UserAgent
@@ -10,12 +11,18 @@ class Fl:
         self.page = page
 
     async def main(self):
+        print('Начинаю парсить fl')
         jobs = []
         pages_htmls = await self.export_pages_htmls()
+
         for page_html in pages_htmls:
             for job in self.parse_page(page_html):
                 jobs.append(job)
 
+        # for i in jobs:
+        #     print(f'{i["name"]}: {i["url"]}')
+
+        print(f'Распарсил fl: {len(jobs)}')
         return jobs
     
     async def export_pages_htmls(self):
@@ -38,7 +45,11 @@ class Fl:
         await special_field.press('Enter')
 
         await apply_button.click()
-        await self.page.wait_for_load_state(state='networkidle')
+
+        try:
+            await self.page.wait_for_load_state(state='networkidle', timeout=3000)
+        except TimeoutError:
+            pass
 
         while True:
             count += 1
@@ -50,7 +61,11 @@ class Fl:
                 break
 
             await next_page_link.click()
-            await self.page.wait_for_load_state(state='networkidle')
+
+            try:
+                await self.page.wait_for_load_state(state='networkidle', timeout=3000)
+            except TimeoutError:
+                pass
     
         return pages_htmls
 
@@ -63,7 +78,7 @@ class Fl:
             if 'Исполнитель определён' not in job_stack.text:
                 job_tag = job_stack.find('a', class_='text-dark text-decoration-none link-hover-danger cursor-pointer')
                 job_name = job_tag.text
-                job_url = 'https://www.fl.ru/' + job_tag['href']
+                job_url = 'https://www.fl.ru' + job_tag['href']
                 job = {'name': job_name,
                        'url': job_url}
 
@@ -75,15 +90,19 @@ if __name__ == '__main__':
 
 
     async def creater():
-        async with async_playwright() as playwright:
-            browser = await playwright.chromium.launch(headless=False)
-            context = await browser.new_context(
-                ignore_https_errors=True,
-                user_agent=user_agent)
-            browser_page = await context.new_page()
-            a = Fl(browser_page)
-            return await a.main()
+        while True:
+            async with async_playwright() as playwright:
+                browser = await playwright.chromium.launch(headless=False)
+                context = await browser.new_context(
+                    ignore_https_errors=True,
+                    user_agent=user_agent)
+                browser_page = await context.new_page()
+                a = Fl(browser_page)
+                return await a.main()
 
+    async def mainmain():
+        while True:
+            await creater()
+            await asyncio.sleep(20)
 
-    asyncio.run(creater())
-
+    asyncio.run(mainmain())
