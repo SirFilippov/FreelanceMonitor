@@ -46,7 +46,7 @@ class Kwork:
         for job_stack in job_stacks:
             job_tag = job_stack.find('a')
             job_name = job_tag.text
-            job_url = 'https://kwork.ru/' + job_tag['href']
+            job_url = 'https://kwork.ru' + job_tag['href']
             job = {'name': job_name,
                    'url': job_url}
             yield job
