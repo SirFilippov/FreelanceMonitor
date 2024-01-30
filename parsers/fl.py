@@ -92,7 +92,7 @@ if __name__ == '__main__':
     async def creater():
         while True:
             async with async_playwright() as playwright:
-                browser = await playwright.chromium.launch(headless=False)
+                browser = await playwright.chromium.launch(headless=True)
                 context = await browser.new_context(
                     ignore_https_errors=True,
                     user_agent=user_agent)
