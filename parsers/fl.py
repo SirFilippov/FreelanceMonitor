@@ -19,8 +19,8 @@ class Fl:
             for job in self.parse_page(page_html):
                 jobs.append(job)
 
-        # for i in jobs:
-        #     print(f'{i["name"]}: {i["url"]}')
+        for i in jobs:
+            print(f'{i["name"]}: {i["url"]}')
 
         print(f'Распарсил fl: {len(jobs)}')
         return jobs
