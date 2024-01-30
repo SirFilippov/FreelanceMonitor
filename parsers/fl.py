@@ -39,7 +39,7 @@ class Fl:
         await category_field.fill('Программирование')
         await category_field.press('Enter')
 
-        await asyncio.sleep(0.5)
+        await asyncio.sleep(2)
 
         await special_field.fill('Парсинг данных')
         await special_field.press('Enter')
