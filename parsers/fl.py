@@ -53,7 +53,7 @@ class Fl:
 
         while True:
             count += 1
-            # print(f'Текущая страница: {count}')
+            print(f'Текущая страница: {count}')
             pages_htmls.append(await self.page.content())
             next_page_link = self.page.locator('//*[@id="PrevLink"]')
 
