@@ -47,7 +47,7 @@ class Fl:
         await apply_button.click()
 
         try:
-            await self.page.wait_for_load_state(state='networkidle', timeout=3000)
+            await self.page.wait_for_load_state(state='networkidle', timeout=10000)
         except TimeoutError:
             pass
 
@@ -63,7 +63,7 @@ class Fl:
             await next_page_link.click()
 
             try:
-                await self.page.wait_for_load_state(state='networkidle', timeout=3000)
+                await self.page.wait_for_load_state(state='networkidle', timeout=10000)
             except TimeoutError:
                 pass
     
