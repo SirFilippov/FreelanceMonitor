@@ -19,10 +19,11 @@ class Fl:
             for job in self.parse_page(page_html):
                 jobs.append(job)
 
-        # for i in jobs:
-        #     print(f'{i["name"]}: {i["url"]}')
+        print(f'Распарсил fl: {len(jobs)}. Вот эти заявки:')
 
-        print(f'Распарсил fl: {len(jobs)}')
+        for i in jobs:
+            print(f'{i["name"]}: {i["url"]}')
+
         return jobs
 
     async def export_pages_htmls(self):
